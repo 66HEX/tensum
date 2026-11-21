@@ -1,0 +1,51 @@
+## API reference
+
+The package root groups the public API by job, with CSS and coupled-system utilities exposed on dedicated subpaths.
+
+### Exports
+
+| Job                  | Import           | Main exports                                                     |
+| -------------------- | ---------------- | ---------------------------------------------------------------- |
+| GSAP composition     | `tensum`         | `TensumPlugin`, `createMotionSpringTween`                        |
+| Direct controller    | `tensum`         | `springTo`, `SUPPORTED_PROPERTIES`                               |
+| Analytical solver    | `tensum`         | `createSpring`, `createSpringModel`, `createVectorSpring`        |
+| Parameter conversion | `tensum`         | `springParameters`, `springPresets`, `springCharacteristics`     |
+| Reactive values      | `tensum`         | `createSpringValue`, `createAdditiveSpringValue`                 |
+| Sampling             | `tensum`         | `createSpringKeyframes`, `velocityFromSamples`                   |
+| Inertia              | `tensum`         | `createInertia`, `snapToGrid`                                    |
+| CSS export           | `tensum/css`     | `springToCSSLinear`                                              |
+| Coupled systems      | `tensum/coupled` | `createCoupledSpringSystem`                                      |
+
+### Analytical solver
+
+`createSpring()` returns `positionAt(time)`, `velocityAt(time)`, `stateAt(time)`, settlement information (`getSettlingDuration()`, `getSettlingResult()`), and `retarget(target, time)`. It does not schedule animation frames or touch the DOM.
+
+```ts
+import { createSpring } from 'tensum';
+
+const spring = createSpring({
+  from: 0,
+  to: 240,
+  velocity: 0,
+  mass: 1,
+  stiffness: 180,
+  damping: 24,
+});
+
+const mid = spring.stateAt(0.2);
+const redirected = spring.retarget(80, 0.2);
+```
+
+### Reactive values
+
+`createSpringValue()` drives a single scalar value with a frame driver and emits `logicalComplete`, `settle`, and `unsettled` events. If physical settlement happens before its requested perceptual duration, `logicalComplete` fires immediately before `settle`.
+
+`createAdditiveSpringValue()` composes independent physical contributions and exposes `settle` and `unsettled`. It intentionally has no perceptual `timing` option or `logicalComplete` event because independent contributions do not share one logical boundary.
+
+### Runtime support
+
+- **Modules:** ESM-only. TypeScript declarations, source maps, and declaration maps are included. CommonJS `require()` is intentionally unsupported; CommonJS code can use dynamic `import('tensum')`.
+- **Node.js:** Tested on Node.js `20.19.x`, `22.12.0+`, and `24.x`.
+- **Browsers:** ES2022-capable Chromium, Firefox, and WebKit.
+- **Peer dependency:** GSAP `^3.15.0`.
+- **TypeScript:** Use `moduleResolution: "node16"`, `"nodenext"`, or `"bundler"` so the `tensum/css` and `tensum/coupled` subpaths resolve cleanly.

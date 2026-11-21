@@ -6,16 +6,15 @@
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "pnpm --filter tensum build && pnpm --filter tensum-site dev",
+    "dev": "pnpm --filter tensum build && pnpm --filter @tensum/web dev",
     "build": "pnpm -r --if-present build",
-    "deploy:site": "pnpm --filter tensum build && pnpm --filter tensum-site build && pnpm --filter tensum-site run deploy",
-    "deploy:site:dry-run": "pnpm --filter tensum build && pnpm --filter tensum-site build && pnpm --filter tensum-site run deploy:dry-run",
+    "deploy:site": "pnpm --filter tensum build && pnpm --filter @tensum/web build && pnpm --filter @tensum/web run deploy",
+    "deploy:site:dry-run": "pnpm --filter tensum build && pnpm --filter @tensum/web build && pnpm --filter @tensum/web run deploy:dry-run",
     "benchmark": "pnpm -r --if-present benchmark",
     "check": "pnpm --filter tensum build && pnpm -r --if-present check",
     "test": "pnpm -r --if-present test",
     "test:browser": "pnpm --filter tensum test:browser",
     "lint": "pnpm -r --if-present lint",
-    "format": "pnpm --filter tensum-site format",
     "release:check": "node scripts/release-check.mjs",
     "release:api": "pnpm --filter tensum build && node scripts/public-api-check.mjs",
     "release:metadata": "node scripts/release-metadata-check.mjs",
@@ -24,14 +23,5 @@
   },
   "devDependencies": {
     "publint": "0.3.17"
-  },
-  "pnpm": {
-    "packageExtensions": {
-      "vaul-svelte@1.0.0-next.7": {
-        "dependencies": {
-          "bits-ui": "^1.1.0"
-        }
-      }
-    }
   }
 }

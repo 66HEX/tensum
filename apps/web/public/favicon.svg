@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 12 11" fill="none">
+  <style>
+    :root {
+      color: #09090b;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        color: #fafafa;
+      }
+    }
+  </style>
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 7.26562)"
+    fill="currentColor"
+    fill-opacity="0.2"
+  />
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 3.26562)"
+    fill="currentColor"
+    fill-opacity="0.4"
+  />
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 5.26562)"
+    fill="currentColor"
+    fill-opacity="0.3"
+  />
+</svg>

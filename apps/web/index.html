@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Analytical spring solver with a GSAP plugin, direct controller, and certified CSS linear() export."
+    />
+    <meta name="theme-color" content="#fcfcfc" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <title>Tensum · Analytical spring physics for GSAP</title>
+    <link rel="canonical" href="https://tensum.madebyhex.com/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Tensum" />
+    <meta property="og:url" content="https://tensum.madebyhex.com/" />
+    <meta property="og:title" content="Tensum · Analytical spring physics for GSAP" />
+    <meta
+      property="og:description"
+      content="Analytical spring solver with a GSAP plugin, direct controller, and certified CSS linear() export."
+    />
+    <meta property="og:image" content="https://tensum.madebyhex.com/og.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Tensum — Analytical spring physics for GSAP." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tensum · Analytical spring physics for GSAP" />
+    <meta
+      name="twitter:description"
+      content="Analytical spring solver with a GSAP plugin, direct controller, and certified CSS linear() export."
+    />
+    <meta name="twitter:image" content="https://tensum.madebyhex.com/og.png" />
+    <meta name="twitter:image:alt" content="Tensum — Analytical spring physics for GSAP." />
+    <script>
+      try {
+        const savedTheme = localStorage.getItem('tensum.theme');
+        const darkTheme =
+          savedTheme === 'dark' ||
+          (savedTheme !== 'light' && matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', darkTheme);
+        document.documentElement.style.colorScheme = darkTheme ? 'dark' : 'light';
+      } catch {}
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

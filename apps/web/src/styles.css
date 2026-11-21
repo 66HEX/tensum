@@ -1,0 +1,455 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+
+@custom-variant dark (&:is(.dark *));
+
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('@fontsource-variable/inter/files/inter-latin-opsz-normal.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Inter Variable';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('@fontsource-variable/inter/files/inter-latin-opsz-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Ioskeley Mono';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/IoskeleyMono-Medium.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Ioskeley Mono';
+  font-style: italic;
+  font-weight: 500;
+  font-display: swap;
+  src: url('/fonts/IoskeleyMono-MediumItalic.woff2') format('woff2');
+}
+
+@theme inline {
+  --font-sans: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Inter Variable', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono:
+    'Ioskeley Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
+    'Courier New', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: calc(var(--radius) * 1);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.4;
+  --text-xs--letter-spacing: 0;
+
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-sm--letter-spacing: -0.013em;
+
+  --text-base: 1rem;
+  --text-base--line-height: 1.6;
+  --text-base--letter-spacing: -0.011em;
+
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.4;
+  --text-lg--letter-spacing: -0.012em;
+
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.33;
+  --text-xl--letter-spacing: -0.012em;
+
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 1.33;
+  --text-2xl--letter-spacing: -0.012em;
+
+  --text-3xl: 2rem;
+  --text-3xl--line-height: 1.125;
+  --text-3xl--letter-spacing: -0.022em;
+
+  --text-4xl: 2.5rem;
+  --text-4xl--line-height: 1.1;
+  --text-4xl--letter-spacing: -0.022em;
+
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1;
+  --text-5xl--letter-spacing: -0.022em;
+
+  --text-6xl: 4rem;
+  --text-6xl--line-height: 1.06;
+  --text-6xl--letter-spacing: -0.022em;
+
+  --shadow-2xs:
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 7.45%, transparent),
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset,
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(7.06% + var(--shadow-outline-opacity-boost)),
+        transparent
+      );
+  --shadow-xs:
+    0px 1px 1px -0.5px color-mix(in oklab, var(--shadow-dark) 18.82%, transparent),
+    0px 2px 2px -1px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 4px 4px -2px color-mix(in oklab, var(--shadow-dark) 1.96%, transparent),
+    0px 8px 4px -3px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent),
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(7.06% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset;
+  --shadow-sm:
+    0px 1px 2px -0.5px color-mix(in oklab, var(--shadow-dark) 18.82%, transparent),
+    0px 3px 3px -1px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 6px 5px -2px color-mix(in oklab, var(--shadow-dark) 1.96%, transparent),
+    0px 15px 6px -3px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent),
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(7.06% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset;
+  --shadow-md:
+    0px 1px 3px 0px color-mix(in oklab, var(--shadow-dark) 5.1%, transparent),
+    0px 5px 5px -1px color-mix(in oklab, var(--shadow-dark) 5.1%, transparent),
+    0px 11px 6px -2px color-mix(in oklab, var(--shadow-dark) 3.14%, transparent),
+    0px 19px 8px -3px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent),
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset,
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(7.06% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent);
+  --shadow-lg:
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset,
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(10.2% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 10.2%, transparent),
+    0px 2px 5px -1px color-mix(in oklab, var(--shadow-dark) 5.88%, transparent),
+    0px 8px 12px -1px color-mix(in oklab, var(--shadow-dark) 5.1%, transparent),
+    0px 22px 16px -2px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 32px 18px -2px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent);
+  --shadow-xl:
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset,
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(10.2% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 10.2%, transparent),
+    0px 4px 8px -1px color-mix(in oklab, var(--shadow-dark) 5.88%, transparent),
+    0px 15px 15px -1px color-mix(in oklab, var(--shadow-dark) 5.1%, transparent),
+    0px 33px 20px -2px color-mix(in oklab, var(--shadow-dark) 3.92%, transparent),
+    0px 58px 23px -2px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent);
+  --shadow-2xl:
+    0px 13px 29px 0px color-mix(in oklab, var(--shadow-dark) 7.06%, transparent),
+    0px 53px 53px 0px color-mix(in oklab, var(--shadow-dark) 5.88%, transparent),
+    0px 119px 71px 0px color-mix(in oklab, var(--shadow-dark) 3.14%, transparent),
+    0px 211px 85px 0px color-mix(in oklab, var(--shadow-dark) 1.18%, transparent),
+    0px 0px 0px 1px
+      color-mix(
+        in oklab,
+        var(--shadow-dark) calc(10.2% + var(--shadow-outline-opacity-boost)),
+        transparent
+      ),
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-dark) 10.2%, transparent),
+    0px 0px 0px 1px color-mix(in oklab, var(--shadow-light) 5.1%, transparent) inset,
+    0px 1px 0px 0px color-mix(in oklab, var(--shadow-light) 8.16%, transparent) inset;
+}
+
+@utility type-display {
+  @apply font-display font-normal tracking-tight;
+  font-feature-settings: normal;
+  font-synthesis: none;
+}
+
+:root {
+  --background: oklch(0.967 0.001 286.375);
+  --foreground: oklch(0.141 0.005 285.823);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.141 0.005 285.823);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.141 0.005 285.823);
+  --primary: oklch(0.21 0.006 285.885);
+  --primary-foreground: oklch(0.985 0 0);
+  --secondary: oklch(0.934 0.001 286.375);
+  --secondary-foreground: oklch(0.21 0.006 285.885);
+  --muted: oklch(0.934 0.001 286.375);
+  --muted-foreground: oklch(0.535 0.016 285.938);
+  --accent: oklch(0.967 0.001 286.375);
+  --accent-foreground: oklch(0.21 0.006 285.885);
+  --destructive: oklch(0.577 0.245 27.325);
+  --border: oklch(0.92 0.004 286.32);
+  --input: oklch(0.92 0.004 286.32);
+  --ring: oklch(0.705 0.015 286.067);
+  --chart-1: oklch(0.871 0.006 286.286);
+  --chart-2: oklch(0.552 0.016 285.938);
+  --chart-3: oklch(0.442 0.017 285.786);
+  --chart-4: oklch(0.37 0.013 285.805);
+  --chart-5: oklch(0.274 0.006 286.033);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.141 0.005 285.823);
+  --sidebar-primary: oklch(0.21 0.006 285.885);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.967 0.001 286.375);
+  --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
+  --sidebar-border: oklch(0.92 0.004 286.32);
+  --sidebar-ring: oklch(0.705 0.015 286.067);
+  --shadow-dark: var(--foreground);
+  --shadow-light: var(--card);
+  --shadow-outline-opacity-boost: 0%;
+}
+
+.dark {
+  --background: oklch(0.141 0.005 285.823);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.21 0.006 285.885);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.21 0.006 285.885);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.92 0.004 286.32);
+  --primary-foreground: oklch(0.21 0.006 285.885);
+  --secondary: oklch(0.274 0.006 286.033);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.274 0.006 286.033);
+  --muted-foreground: oklch(0.705 0.015 286.067);
+  --accent: oklch(0.274 0.006 286.033);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.552 0.016 285.938);
+  --chart-1: oklch(0.871 0.006 286.286);
+  --chart-2: oklch(0.552 0.016 285.938);
+  --chart-3: oklch(0.442 0.017 285.786);
+  --chart-4: oklch(0.37 0.013 285.805);
+  --chart-5: oklch(0.274 0.006 286.033);
+  --sidebar: oklch(0.21 0.006 285.885);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.274 0.006 286.033);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.552 0.016 285.938);
+  --shadow-dark: oklch(0 0 0);
+  --shadow-light: var(--foreground);
+  --shadow-outline-opacity-boost: 20%;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  ::selection {
+    @apply bg-primary text-primary-foreground;
+  }
+  html {
+    @apply scroll-pt-24 scroll-smooth has-focus-visible:scroll-auto;
+  }
+  body {
+    @apply m-0 bg-background font-sans text-foreground antialiased;
+    font-optical-sizing: auto;
+    font-feature-settings: 'cv01', 'ss03';
+  }
+  code,
+  pre,
+  kbd {
+    @apply font-mono font-medium;
+    font-feature-settings: normal;
+  }
+}
+
+.page-frame {
+  container-type: inline-size;
+  max-inline-size: 48rem;
+  min-block-size: 100svh;
+  margin-inline: auto;
+  overflow-x: clip;
+}
+
+.page-column {
+  max-inline-size: 42rem;
+  min-block-size: 100svh;
+  margin-inline: auto;
+}
+
+.layout-band {
+  position: relative;
+}
+
+.layout-band::before,
+.layout-band::after {
+  content: '';
+  position: absolute;
+  z-index: 1;
+  inset-inline-start: 50%;
+  inline-size: 100cqw;
+  border-block-start: 1px dashed var(--border);
+  translate: -50% 0;
+  pointer-events: none;
+}
+
+.layout-band::before {
+  inset-block-start: -1px;
+}
+
+.layout-band::after {
+  inset-block-end: 0;
+}
+
+.layout-band:has(+ .layout-band)::after {
+  content: none;
+}
+
+[data-layout-surface] {
+  margin: 0;
+  padding: 0;
+}
+
+.document-section {
+  display: flow-root;
+  min-inline-size: 0;
+}
+
+.document-section > :where([data-heading], p, ul, ol, blockquote, dl, details) {
+  margin: 0;
+  padding: 1rem;
+}
+
+.document-section > :where(ul, ol) {
+  padding-inline-start: 2.25rem;
+}
+
+.document-section > :where(p, ul, ol) + :where(p, ul, ol),
+.document-section
+  > [data-framework-code]:has(> [data-framework-panel] > :where(p, ul, ol):last-child)
+  + :where(p, ul, ol) {
+  padding-block-start: 0;
+}
+
+.document-section > [data-heading].layout-band {
+  min-block-size: 3.125rem;
+}
+
+@media (min-width: 40rem) {
+  .page-frame {
+    border-inline: 1px solid var(--border);
+  }
+
+  .page-column {
+    border-inline: 1px dashed var(--border);
+  }
+}
+
+.dark .shiki,
+.dark .shiki span {
+  color: var(--shiki-dark) !important;
+  font-style: var(--shiki-dark-font-style) !important;
+  font-weight: var(--shiki-dark-font-weight) !important;
+  text-decoration: var(--shiki-dark-text-decoration) !important;
+}
+
+.tooltip-text {
+  overflow: clip;
+  overflow-clip-margin: 4px;
+}
+
+.tooltip-text-state {
+  position: absolute;
+  width: max-content;
+  opacity: 0;
+  translate: 0 4px;
+  filter: blur(2px);
+  transition:
+    opacity 150ms ease-out,
+    translate 150ms ease-out,
+    filter 150ms ease-out;
+}
+
+.tooltip-text-state:where([data-before='true']) {
+  translate: 0 -4px;
+}
+
+.tooltip-text-state:where([data-active='true']) {
+  position: relative;
+  width: auto;
+  opacity: 1;
+  translate: 0 0;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tooltip-text-state {
+    translate: none;
+    filter: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

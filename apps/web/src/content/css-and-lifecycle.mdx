@@ -1,0 +1,37 @@
+## CSS and lifecycle
+
+### CSS `linear()` export
+
+The `tensum/css` subpath exports an adaptive `linear()` approximation of the same analytical trajectory.
+
+```ts
+import { createSpring } from 'tensum';
+import { springToCSSLinear } from 'tensum/css';
+
+const spring = createSpring({
+  from: 0,
+  to: 1,
+  velocity: 0,
+  mass: 1,
+  stiffness: 180,
+  damping: 24,
+});
+
+const css = springToCSSLinear(spring, { maxError: 0.001 });
+
+element.style.transition = `transform ${css.duration}s ${css.easing}`;
+```
+
+The result contains the easing string, duration, certified maximum approximation error, and the exact rounded normalized samples used to build the string. `maxError` is a hard normalized-progress bound that accounts for piecewise-linear interpolation, rounded stop positions, and the final move to `1`. If an explicit `duration`, `precision`, `maxDepth`, or `maxSamples` makes that bound impossible, `springToCSSLinear()` throws a `RangeError` rather than returning an under-sampled curve.
+
+### GSAP lifecycle
+
+GSAP owns timeline playback, seeking, repeats, yoyo cycles, context reverts, and property-level kills. Tensum samples the corresponding analytical time and maintains an ownership registry per target and property.
+
+- Overlapping effects on the same target and property hand off automatically; the newer track becomes the only writer.
+- Killing one property removes only that spring track; killing the final property releases the internal driver. If the killed track made an unsettled `continue` tween infinite, the remaining duration and original repeat count are restored.
+- Finite repeats and yoyo cycles use cycle-local spring time. A yoyo handoff reverses the inherited velocity along with the position path.
+- Calling `invalidate()` keeps the snapshot and duration captured at construction. Construct a new effect tween to preflight different inputs.
+- Context revert and interruption release active ownership and restore the baseline captured when the effect was constructed.
+
+After normal completion, the last analytical state remains available as a terminal handoff baseline—including the non-zero velocity of an unsettled `stop` spring at `maxDuration`. If application code writes a different value after completion, the next implicit handoff detects that external write, discards the terminal history, and starts from the current value. An explicit `from` always wins.

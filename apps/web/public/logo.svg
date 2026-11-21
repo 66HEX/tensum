@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="12" height="11" viewBox="0 0 12 11" fill="none">
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 7.26562)"
+    fill="currentColor"
+    fill-opacity="0.2"
+  />
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 3.26562)"
+    fill="currentColor"
+    fill-opacity="0.4"
+  />
+  <rect
+    width="6.53183"
+    height="6.53183"
+    rx="1"
+    transform="matrix(0.866044 -0.499967 0.866044 0.499967 0 5.26562)"
+    fill="currentColor"
+    fill-opacity="0.3"
+  />
+</svg>

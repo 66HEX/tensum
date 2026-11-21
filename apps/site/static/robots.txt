@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tensum.madebyhex.com/sitemap.xml

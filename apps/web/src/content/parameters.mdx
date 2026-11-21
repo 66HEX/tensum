@@ -1,0 +1,63 @@
+## Parameters and settlement
+
+Every physical spring uses three values. Time is measured in seconds and velocity in property units per second. The solver itself is unit-agnostic: `x` may use pixels while `rotation` uses degrees.
+
+| Parameter   | Constraint     | Effect                                                       |
+| ----------- | -------------- | ------------------------------------------------------------ |
+| `mass`      | `> 0`          | More mass resists acceleration and slows the response time.  |
+| `stiffness` | `> 0`          | Higher stiffness pulls toward the target more strongly.      |
+| `damping`   | `>= 0`         | Higher damping removes oscillation and velocity sooner.      |
+
+You can supply physical parameters directly or derive them from perceptual controls and presets:
+
+```ts
+import { springParameters, springPresets, springCharacteristics } from 'tensum';
+
+const tuned = springParameters.fromPerceptualDuration({
+  duration: 0.5,
+  bounce: 0.15,
+});
+
+const smooth = springPresets.smooth();
+const snappy = springPresets.snappy({ duration: 0.42 });
+const bouncy = springPresets.bouncy({ extraBounce: 0.08 });
+
+const info = springCharacteristics(tuned);
+```
+
+`springParameters` also accepts response, visual duration, and settling-duration inputs. `springCharacteristics(parameters)` returns the damping ratio, regime, angular frequency, response, bounce, and perceptual duration for any physical configuration.
+
+### Settlement
+
+A damped spring approaches equilibrium asymptotically, so the runtime needs a practical completion boundary. A spring is physically settled when both remaining distance and velocity stay inside their tolerances for the future tail:
+
+```text
+abs(position - target) <= positionEpsilon
+abs(velocity) <= velocityEpsilon
+```
+
+| Input                  | Role                                              |
+| ---------------------- | ------------------------------------------------- |
+| `position`             | Maximum remaining distance from the target.       |
+| `velocity`             | Maximum remaining speed.                          |
+| `maxDuration`          | Search boundary for a finite settlement.          |
+| `refinementIterations` | Precision of the final settling duration search.  |
+
+`onLogicalComplete` and `onSettle` describe separate boundaries. Logical completion follows the requested perceptual duration (clamped to finite driver boundaries); settlement runs when physical tolerances are met.
+
+### Unsettled springs
+
+An undamped moving spring never reaches physical rest. Choose an `unsettled` policy explicitly when this is possible:
+
+| Policy     | Result                                                                 |
+| ---------- | ---------------------------------------------------------------------- |
+| `stop`     | Freeze at the analytical state at `maxDuration`. This is the default.  |
+| `snap`     | Write the target value with zero velocity at `maxDuration`.            |
+| `continue` | Keep an infinite GSAP driver and continue analytical sampling.         |
+| `error`    | Reject the animation during initialization.                            |
+
+`onUnsettled` runs when a finite boundary is crossed without settlement; `onSettle` does not run for that track.
+
+<Callout title="Continue owns an infinite driver">
+  Covering a `continue` track with a newer property track changes which track writes the property, but it does not end the old driver. Kill the property or tween when the continuing spring is no longer needed.
+</Callout>

@@ -1,0 +1,111 @@
+## Usage
+
+```sh
+pnpm add tensum gsap
+```
+
+Install `tensum` beside `gsap`. GSAP is a peer dependency so your application and the plugin share the same timeline instance. Register the plugin once, then add springs through the timeline effect:
+
+```ts
+import { gsap } from 'gsap';
+import { TensumPlugin, springPresets } from 'tensum';
+
+gsap.registerPlugin(TensumPlugin);
+
+gsap.timeline().spring(card, {
+  x: 320,
+  from: { x: 0 },
+  parameters: springPresets.snappy(),
+});
+```
+
+No GSAP `duration` or `ease` is required. The physical parameters and settling tolerances determine the duration and trajectory.
+
+<Callout title="Choose the API by clock ownership">
+  Use `timeline.spring()` when GSAP owns composition. Use `springTo()` when you need direct controls such as `pause()`, `seek()`, or `playbackReverse()`. Use `createSpring()` when you only need analytical samples.
+</Callout>
+
+### `timeline.spring()`
+
+The registered effect preflights every target before adding its tween. Sequential children, staggered targets, and nested timelines receive the final derived duration immediately.
+
+```ts
+const timeline = gsap.timeline();
+
+timeline
+  .spring(card, {
+    x: 320,
+    from: { x: 0 },
+    parameters: { mass: 1, stiffness: 180, damping: 24 },
+  })
+  .spring(card, {
+    x: 80,
+    from: { x: 320 },
+    parameters: { mass: 1, stiffness: 240, damping: 26 },
+  });
+```
+
+Ordinary GSAP driver options belong under `tween`. Tensum derives and owns `duration` and `ease`.
+
+```ts
+timeline.spring(cards, {
+  y: 0,
+  from: { y: -24 },
+  parameters: springPresets.snappy(),
+  tween: {
+    stagger: 0.06,
+    repeat: 1,
+    yoyo: true,
+  },
+});
+```
+
+Use `createMotionSpringTween(targets, vars)` when you need the preflighted tween itself rather than the extended timeline method.
+
+### Starting state and velocity
+
+Preflight reads the target when the effect is created. That is correct when the element already has its starting value. If an earlier timeline child will change the target later, pass the future state through `from` and, when known, `velocity`.
+
+```ts
+timeline.spring(card, {
+  x: 80,
+  from: { x: 320 },
+  velocity: { x: -240 },
+  parameters: springPresets.snappy(),
+});
+```
+
+`velocity` is measured in property units per second. A single number applies to every property; a map sets each property independently.
+
+<Callout title="Why from is explicit">
+  An effect created before playback cannot inspect a state that an earlier child has not written yet. `from` makes that future snapshot part of the timeline definition, so layout is fully determined during construction.
+</Callout>
+
+### `springTo()`
+
+`springTo(target, vars)` uses GSAP property access and ticking while returning direct playback controls. Built-in transform properties are `x`, `y`, `scale`, and `rotation`; other numeric GSAP properties go in `targets`.
+
+```ts
+import { springTo } from 'tensum';
+
+const motion = springTo(card, {
+  x: 600,
+  rotation: '30deg',
+  velocity: { x: 1250 },
+  spring: {
+    mass: 1,
+    stiffness: 180,
+    damping: 24,
+    settle: { position: 0.1, velocity: 0.1 },
+  },
+  targets: { opacity: 1 },
+});
+
+motion.pause();
+motion.seek(0.2);
+motion.resume();
+```
+
+The controller also exposes `play()`, `stop()`, `playbackReverse()`, `kill()`, `getSnapshot()`, its GSAP `tween`, and the per-property analytical solutions in `springs`. Starting a newer Tensum track on the same target and property performs an automatic velocity-preserving handoff without restarting from rest.
+
+DOM `x` and `y` values default to pixels, while DOM `rotation` defaults to degrees. Ordinary object properties stay unitless unless their current value, destination, adapter, or `units` configuration supplies a unit. A unit mismatch throws before playback starts.

@@ -1,0 +1,96 @@
+## Writing with MDX
+
+The entire document is composed from MDX sections. Ordinary Markdown goes through a shared component map; interactive examples use the same components as the rest of the documentation.
+
+### Text and hierarchy
+
+Paragraphs use Inter at 16 px with a 1.625 line height. **Emphasis is quiet**, _italics remain available_, and ~~deleted text~~ keeps its usual meaning. Inline `code` uses Ioskeley Mono Medium.
+
+#### A third-level heading
+
+Headings preserve their semantic levels. The 672 px column sits inside a 768 px frame on larger screens. Text uses 16 px insets; cards, tables, and code fill their rows.
+
+##### A fourth-level heading
+
+Keep subsections short and use descriptive links, like [the controller reference](#api-reference).
+
+###### A fifth-level heading
+
+Additional heading levels remain available for deeply structured references.
+
+###### A sixth-level heading
+
+Every heading can be linked directly.
+
+### Lists and quotes
+
+- Use a normal list for related ideas.
+- Nest a list when the relationship needs it.
+  - Keep the child close to its parent.
+
+1. Register a target.
+2. Define a rule.
+3. Handle its prediction.
+
+- [x] Semantic Markdown components
+- [x] Code highlighted at build time
+- [ ] A real task that has not been completed
+
+> A prediction is only useful if the interface still works when it is wrong.
+
+### Code and tables
+
+Fenced code is highlighted by Shiki and includes a copy control. Long lines scroll inside the block.
+
+```ts
+const condition = { type: 'intersects', withinMs: 120 } as const;
+```
+
+| Element   | Rendering                                    |
+| :-------- | :------------------------------------------- |
+| Paragraph | Comfortable measure and consistent spacing   |
+| Code      | Shiki, light and dark themes, copy button    |
+| Table     | Bordered container with horizontal scrolling |
+| Image     | Rounded corners and a subtle outline         |
+
+### Images and captions
+
+<Figure>
+  <img
+    src="/trajectory.svg"
+    alt="A pointer trajectory crossing a target rectangle."
+    width="644"
+    height="220"
+  />
+  <Caption>A short projection, in viewport coordinates.</Caption>
+</Figure>
+
+### Useful HTML
+
+Use <kbd className="rounded border border-b-2 bg-card px-1.5 py-0.5 font-mono text-xs text-foreground">Tab</kbd> to move between controls. You can use <mark className="rounded bg-emerald-100 px-1 text-emerald-950 dark:bg-emerald-950 dark:text-emerald-100">highlighted text</mark>, <abbr className="underline decoration-dotted underline-offset-4" title="Estimated time of arrival">ETA</abbr>, x<sup className="text-xs">2</sup>, and x<sub className="text-xs">0</sub> when they clarify a reference.
+
+<dl className="my-6">
+  <dt className="mt-5 font-medium text-foreground">Horizon</dt>
+  <dd className="mt-1 mb-5 ml-5">How far into the future the controller projects movement.</dd>
+  <dt className="mt-5 font-medium text-foreground">Margin</dt>
+  <dd className="mt-1 mb-5 ml-5">The extra area around a target rectangle.</dd>
+</dl>
+
+<Details>
+  <Summary>Which Markdown elements are mapped?</Summary>
+
+All CommonMark and GFM output elements: headings, paragraphs, links, images, lists, blockquotes, code, thematic breaks, emphasis, deletion, tables, task inputs, and footnotes. The map also covers figures, captions, definition lists, disclosure elements, keyboard text, abbreviations, subscript, superscript, audio, and video.
+
+</Details>
+
+<Callout title="Shared components">
+
+The MDX provider owns typography, code blocks, links, media, and tables. Changing a shared component updates every section without editing its prose.
+
+</Callout>
+
+### Footnotes
+
+Footnotes work with the GFM pipeline and keep their return links.[^geometry]
+
+[^geometry]: The documentation describes geometric prediction; it does not claim to predict a user’s intent.
